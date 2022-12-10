@@ -61,17 +61,18 @@ class Solution:
 
         lower = 0
         upper = len(nums) - 1
-        mid = lower + (upper - lower) / 2
-        if nums[mid] == target:
-            return mid
+        while True:
+            mid = lower + (upper - lower) // 2
+            if nums[mid] == target:
+                return mid
 
-        if nums[mid] > target:
-            upper = mid - 1
-        else:
-            lower = mid + 1
-        
-        if lower >= upper:
-            return max(lower, 0)
+            if nums[mid] > target:
+                upper = mid - 1
+            else:
+                lower = mid + 1
+            
+            if lower > upper:
+                return lower if (lower >= len(nums)) or nums[lower] > target else lower + 1 
 
 class TestSolution(unittest.TestCase):
 
@@ -88,6 +89,10 @@ class TestSolution(unittest.TestCase):
         self.assertEqual(2, self.solution.searchInsert([1,3,5,6], 5))
         self.assertEqual(1, self.solution.searchInsert([1,3,5,6], 2))
         self.assertEqual(4, self.solution.searchInsert([1,3,5,6], 7))
+        self.assertEqual(0, self.solution.searchInsert([1,3,5,6], 0))
+        self.assertEqual(1, self.solution.searchInsert([1], 2))
+        self.assertEqual(0, self.solution.searchInsert([1], 0))
+        self.assertEqual(1, self.solution.searchInsert([1,3], 3))
 
 if __name__ == '__main__':
     unittest.main()
