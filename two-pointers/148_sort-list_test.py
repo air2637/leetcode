@@ -77,7 +77,7 @@ class Solution:
         return self.buildListNode(sorted_vals)
         
 
-class TestSolution(unittest.TestCase):
+class TestSolution():
 
     def setUp(self) -> None:
         self.solution = Solution()
