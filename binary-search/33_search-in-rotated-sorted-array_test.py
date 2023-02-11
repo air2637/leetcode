@@ -49,18 +49,17 @@ class Solution():
             return -1
         while left <= right:
             mid = left + (right - left) // 2
-            # print(f"checking mid @ {mid}, with value {nums[mid]}")
+            print(f"checking mid @ {mid}, with value {nums[mid]}")
             if nums[mid] == target:
                 return mid
             if nums[mid] < target:
-                if nums[right] > nums[mid] and nums[right] < target:
-                    # find the left portion rather than the right
-                    right = mid - 1 
+                if nums[right] < target and nums[mid] < nums[right]:
+                    right = mid - 1
                 else:
                     left = mid + 1
             else:
-                if nums[mid] >= nums[left] and nums[left] > target:
-                    # find the right portion rather than the left
+                # right boundary pointed value is sitting between nums[mid] and target, need to check the right half
+                if nums[right] >= target and nums[mid] >= nums[right]:
                     left = mid + 1
                 else:
                     right = mid - 1
@@ -72,11 +71,11 @@ class TestSolution(unittest.TestCase):
         self.solution = Solution()
 
     @parameterized.expand([
-        # ([4,5,6,7,0,1,2], 0, 4),
-        # ([4,5,6,7,0,1,2], 3, -1),
-        # ([1], 0, -1),
-        # ([4,5,6,7,8,1,2,3], 6, 2),
-        # ([4,5,6,7,8,1,2,3], 8, 4),
+        ([4,5,6,7,0,1,2], 0, 4),
+        ([4,5,6,7,0,1,2], 3, -1),
+        ([1], 0, -1),
+        ([4,5,6,7,8,1,2,3], 6, 2),
+        ([4,5,6,7,8,1,2,3], 8, 4),
         ([3,1], 1, 1),
         ([1,3],3,1)
     ])
