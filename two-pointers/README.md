@@ -4,29 +4,60 @@
 1. [15_Sum](#15_3sum)
 1. [870_advantage-suffle](#870_advantage-shuffle)
 
-## 15_3Sum
+## 11_container-with-most-water
 
-Two challenges are there:
+Question is to find the max area between 2 bars that can be formed in a given list of bar heights.
+
+```python
+Two pointers set to the beginning and end of the list, say left, right
+While left < right:
+    find the area = (right - left) * min(left, right)
+    update the max area if current area is bigger
+    shift the pointer that at shorter height to one index inward (As no point shifting the longer one since the shorter one is the current bottleneck) 
+return the max area
+```
+
+
+## 15_3Sum / 18_4Sum
+
 1. To convert the question to Two-pointers questions:
 
     The questions can be thought as fixing the first index and find the remaining 2 pointers that fulfill the target sum.
 
 2. To understand the logic of removing duplicate result set:
 
-    For 1st index p1, need to skip if `nums[p1] == nums[p1-1]`, as it means the same value has been processed before as the 1st value of the candidate result set.
-
-    For 2nd index p2, 3rd index p3, need to skip if `nums[p2] == nums[p2+1]`. Noticing here we are comparing the current index value against the value of its next index, this is because we want to standardise the action of 
-    ```
-    p2 += 1
-    p3 -= 1
-    ```
-    no matter whether there is a equivalent value in adjacent or not, we both need to shift the index for one more place left/right. (We need further check if we do `nums[p2] == nums[p2-1]`, as we should not shift the p2 anymore once breaking out from the `while` loop)
-
-    In addition, we add the result set upon its first occourance, to be working together with `nums[p2] == nums[p2+1]`:
-
-    ```python
-    the_result.append([nums[p1], nums[p2], nums[p3]])
-    ``` 
+    When iterating the value for same position (e.g. 2nd number), we need `if i > start and nums[i] == nums[i-1]` to remove the duplicate value as the candicate for **same** position
+```python
+recursive_N_sum(4, 0, len(nums) - 3, N)
+# note the end_pos is exclusive, hence the max value for 1st postion can be taken up to index len(nums) - 4
+```
+```python
+sort nums
+per_combo = []
+res = []
+recursive_N_sum(k , start_pos, end_pos, target):
+        if k != 2:
+            # not base range - last 2 postions
+            for i in nums[start_pos:end_pos]:
+                if i > start and nums[i] == nums[i-1]:
+                    # to skip the same value as previous for same position
+                    continue
+                per_combo.append(i)
+                recursive_N_sum(k-1, start_pos + 1, end_pos + 1, target)
+                per_combo.pop()
+        else:
+            left , right = start_pos, end_pos
+            while left < right:
+                if target < sum (per_combo , nums[left], nums[right]):
+                    left += 1
+                elif target > sum (per_combo , nums[left], nums[right]):
+                    right -= 1
+                else:
+                    res.append(per_combo , nums[left], nums[right])
+                    while nums[left] == nums[left + 1]:
+                        # avoid the duplicate in 2nd last postion of the per_combo
+                        left += 1
+```
 
 
 ## 870_advantage-shuffle

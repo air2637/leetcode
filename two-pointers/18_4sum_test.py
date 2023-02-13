@@ -19,7 +19,7 @@ Complexity should be O(n^2)*O(n) = O(n^3), comparing to brute force O(n^4)
 
 class Solution():
 
-    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+    def fourSum_Old(self, nums: List[int], target: int) -> List[List[int]]:
         nums.sort()
         result_list = []
         q1 = 0
@@ -59,6 +59,38 @@ class Solution():
             q1 += 1
         return result_list
 
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        per_combo = []
+        res = []
+    
+        def recursive_N_sum(for_pos, start_idx, end_idx, target, nums, per_combo, res):
+            if for_pos != 2:
+                for i in range(start_idx, end_idx + 1):
+                    if i > start_idx and nums[i] == nums[i - 1]:
+                        continue
+                    per_combo.append(nums[i])
+                    recursive_N_sum(for_pos - 1, i + 1, end_idx + 1, target, nums, per_combo, res)
+                    per_combo.pop()
+                return
+            else:
+                left, right = start_idx, len(nums) - 1
+                while left < right:
+                    if sum(per_combo) + nums[left] + nums[right] > target:
+                        right -= 1
+                    elif sum(per_combo) + nums[left] + nums[right] < target:
+                        left += 1
+                    else:
+                        sigle_res = []
+                        sigle_res.extend(per_combo)
+                        sigle_res.extend([nums[left], nums[right]])
+                        res.append(sigle_res)
+                        left += 1
+                        while nums[left] == nums[left - 1]:
+                            left += 1
+
+        nums.sort()
+        recursive_N_sum(4, 0, len(nums)-4, target, nums, per_combo, res)
+        return res
 
 class TestSolution(unittest.TestCase):
 
@@ -72,5 +104,6 @@ class TestSolution(unittest.TestCase):
         ([-2,-1,-1,1,1,2,2], 0, ([-2,-1,1,2],[-1,-1,1,1]))
     ])
     def test_fourSum(self, nums, target, expected):
-        self.assertTupleEqual(expected, tuple(self.solution.fourSum(nums, target)))
+        actual = self.solution.fourSum(nums, target)
+        self.assertTupleEqual(expected, tuple(actual))
         
