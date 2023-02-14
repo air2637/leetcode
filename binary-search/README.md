@@ -19,3 +19,23 @@ we keeps moving the tail pointer to the right until `head_sum + tail_sum <= X`, 
 Continue above steps until both head, tail pinters reachign the end.
 
 ***So I think important feature of sliding window problem is move one end to make the outcome larger, moveing the other end to make the outcome smaller***
+
+---
+
+### [300_longest-increasing-subsequence_test.py](300_longest-increasing-subsequence_test.py)
+
+Dynamic programming question!
+
+Keep the state and transfer it, so next step can leverage on.
+
+Iterate over the list, and keeps the longest increasing subsequence it can be achieved up to the step. The next step will determine its own 'state' after doing the comparison logic aginst its previous state / **states** - which happens in our case, that each element being interated on, needs to check against **all its preceeding numbers and build its own state based on the overall best outcome**.
+
+(To the future me, hope you can know what I am saying and probably can add more regarding the understanding about DP!)
+
+---
+
+### [718 maximum length of repeated subarray](718_maximum-length-of-repeated-subarray_test.py)
+
+Dynamic programming question, again!
+
+From the question, not hard to realize that the 'state' exists! Build a 2D array say Outcome[i][j] representing when pointer i in nums1, and pointer j in nums2, what is the best outcome it can achieve! Once that is determined, Outcome[i+1][j+1] will be either 0 / Outcome[i][j] + 1 !
