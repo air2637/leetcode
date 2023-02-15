@@ -39,3 +39,28 @@ Iterate over the list, and keeps the longest increasing subsequence it can be ac
 Dynamic programming question, again!
 
 From the question, not hard to realize that the 'state' exists! Build a 2D array say Outcome[i][j] representing when pointer i in nums1, and pointer j in nums2, what is the best outcome it can achieve! Once that is determined, Outcome[i+1][j+1] will be either 0 / Outcome[i][j] + 1 !
+
+---
+
+### [754 reach a number](754_reach_a_number.py)
+
+Greedy question?
+
+Let us just keep moving right (positive num) until either:
+1. the cumulative sum equals to the target 
+2. the cumulative sum greater than the target
+
+Case #1 is fine, that means we need to move n steps, where $\frac{(1 + n)*n}{2} = target$;
+
+Case #2, means we have exceed the target slightly:
+- if the delta = the_sum - target, and delta is dividable by 2 (the delta is an even number), it means we just need to toggle the direction of step $\frac{delta}{2}$ (it is an non zero integer) to make the new sum becomes target. **Why it is $\frac{delta}{2}$ , go think idiot!** So the steps need to take is still equivalent to the number of steps took,namely n.
+
+- if the delta is not dividable by 2, it means we can move:
+    1. one step to the left of current step n
+    2. then one step right -> so here we can effective movement of - $n - 1 + n$, which is 1 unit right -> it means 2 steps taken, and these 2 steps taken, and be substracted from the_sum, will make the delta become an even.
+    3. **but any way to make 1 step rather than 2 like #2 saying?** - Yes! the answer is that it happens when after moving the move, the new delta becomes an even, namely:
+        $$
+        \frac{the\_sum + (n + 1)}{2}
+        $$
+
+
