@@ -101,3 +101,17 @@ Need to pay attention to `对于所有有效的 i 都有 nums[i] != nums[i + 1]`
 Binary search for a boundary value - rather than searching for a exact number, but a minimum threshold/boundary number!
 
 We know the minimum capacity that fulfills the delivering within `n` days requirement, and we also can tell the maximum capacity, be `max(weights)` and `sum(weights)`. So we can do a binary search between that range for a minimum weight value that fufill the days limit.
+
+---
+### [1802 Maximum value at a given index in a bounded array](1802_maximum-value-at-a-given-index-in-a-bounded-array_test.py)
+
+Greedy + Binary search.
+
+Greedy approach in terms of thinking the objective is to get the maximum number at a given index in the array, and given the absolute difference between 2 adjacement numbers can't be greater than 1, we need to try the best to minimize the rest numbers not at the index.
+In other words, we **just need to find the max number at the index, infer the rest, and ensure the contraint max sum is not exceeded**.
+
+Binary search suits for problems that the outcome is proportional to the inputs, regardless it is postive proportional or negative proportional. With one input, we should be advised from the outcome for the next optional input.
+
+So we just need to find an max input between 1 and the maxSum, that fulfill the maxSum constraint.
+
+
