@@ -114,4 +114,10 @@ Binary search suits for problems that the outcome is proportional to the inputs,
 
 So we just need to find an max input between 1 and the maxSum, that fulfill the maxSum constraint.
 
+### [1608 Special array with x elements greater than or equal x](1608_special-array-with-x-elements-greater-than-or-equal-x_test.py)
 
+I did it with binary search, but it can be a linear O(n) solution, if I had a smart brain :blush:.
+
+Binary search, is because there are **proportional** relation between the `x` and `number of elements >= x`: if `x` increases, less `number of elements >= x`; if `x` decreases, more `number of elements >= x`. So the question becomes, a binary search question, to keep adjusting until you find the x, and it make `number of elements >= x` be x too! One function for this binary search, the other function for returning the `number of elements >= x`. If the latter returns more then `x`, you need to increment `x`, vice versa.
+
+But If you are smart, the question becomes, sorting the nums in descending order, and find `nums[i - 1]` (it is at `i`th in nums) and it should >= i, and its next value `nums[i]` should strictly < i.

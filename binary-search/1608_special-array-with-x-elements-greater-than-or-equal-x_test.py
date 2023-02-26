@@ -8,6 +8,23 @@ from parameterized import parameterized
 class Solution:
 
     def specialArray(self, nums:List[int]) -> int:
+        """
+        sort nums in descending order, if the result value i exists, it must fulfill:
+        1. nums[i-1] >= i
+        2. nums[i] < i
+        """
+        nums.sort(reverse=True)
+        for i in range(len(nums)+1):
+            if i == 0:
+                continue
+            if nums[i-1] >= i and i >= len(nums):
+                return i
+            if nums[i-1] >= i and nums[i] < i:
+                return i
+        return -1
+
+
+    def specialArray2(self, nums:List[int]) -> int:
         lower, upper = 0, len(nums)
         nums.sort()
         while lower <= upper:
