@@ -25,3 +25,11 @@ We just need to know if the right pointed character is the target character, and
     - if not, pop left indexed character, and update the frequency table
         - so here looks normal operation, but is quite significant: it decrement the popped out character's frequency: if the popped out character is same as the added in one, the freq of right won't be changed -> the windown width will not be changed; if the popped out character is different from the added in one, we keep the freq updated with correct statistics of current sliding window.
     - else skip the poping left, but continue with adding next right.
+
+### [438 Find all anagrams in a string](438_find-all-anagrams-in-a-string_test.py)
+
+Sliding window. When the length between (right - left + 1) is the length of pattern 'p', do check if the frequency of chars are fully matched. If the scanned ch not in 'p', left will jump to right + 1; if the ch in 'p', continue.
+
+### [904 Fruit into baskets](904_fruit-into-baskets_test.py)
+
+Sliding window with 2 pointers - pointer for adding the fruit into basket, pointer for removing the fruit from basket. If the fruits added so far are less than 2 kinds, or the to be added fruit is of one kind of the added fruits, add it. Otherwise, shift the pointer for removing the fruits all the way till only one kind left.
