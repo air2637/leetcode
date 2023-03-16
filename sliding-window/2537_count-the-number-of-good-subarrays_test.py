@@ -7,6 +7,23 @@ from parameterized import parameterized
 
 class Solution:
 
+    def countGood(self, nums: List[int], k: int) -> int:
+        left = right = 0
+        counter = Counter()
+        pairs = 0
+        good_cnt = 0
+        while right < len(nums):
+            # what a smart logic - when the same number appears, would increse the pairs the freq of the number before updating
+            pairs += counter[nums[right]]
+            counter[nums[right]] += 1
+            while pairs >= k and left < right:
+                good_cnt += len(nums) - (right + 1) + 1
+                counter[nums[left]] -= 1
+                pairs -= counter[nums[left]]
+                left += 1
+            right += 1
+        return good_cnt
+
     def getCombinationCount(self, objectNums: int, objectChoosenNums: int) -> int:
         dividend = divisor = 1
         current = objectNums
@@ -16,7 +33,7 @@ class Solution:
             current -= 1
         return dividend // divisor
 
-    def countGood(self, nums: List[int], k: int) -> int:
+    def countGood2(self, nums: List[int], k: int) -> int:
         left = right = 0
         num_counter = Counter()
         good_sublist_cnt = 0
